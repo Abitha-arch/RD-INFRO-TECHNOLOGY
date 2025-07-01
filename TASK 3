@@ -1,0 +1,20 @@
+const int motorEnable = 9;  // PWM pin
+const int motorInput1 = 8;
+const int motorInput2 = 7;
+const int potPin = A0;      // Potentiometer input
+
+void setup() {
+  pinMode(motorEnable, OUTPUT);
+  pinMode(motorInput1, OUTPUT);
+  pinMode(motorInput2, OUTPUT);
+  // Set motor to spin forward
+  digitalWrite(motorInput1, HIGH);
+  digitalWrite(motorInput2, LOW);
+}
+
+void loop() {
+  int potValue = analogRead(potPin);  // Read potentiometer
+  int pwmValue = map(potValue, 0, 1023, 0, 255);  
+  analogWrite(motorEnable, pwmValue); // Apply PWM to motor speed
+  delay(10);  // Minor delay for smoothness
+}
