@@ -1,0 +1,53 @@
+#include <LiquidCrystal.h>
+
+// LCD pin connections: RS, E, D4, D5, D6, D7
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+// Time variables
+unsigned long lastMillis = 0;
+int seconds = 0;
+int minutes = 0;
+int hours = 12;  // Starting from 12:00:00
+
+void setup() {
+  lcd.begin(16, 2);      // Initialize 16x2 LCD
+  lcd.print("Simulated Clock");
+  delay(2000);           // Show message for 2 seconds
+  lcd.clear();
+}
+
+void loop() {
+  // Update time every 1 second
+  if (millis() - lastMillis >= 1000) {
+    lastMillis = millis();
+    seconds++;
+
+    if (seconds >= 60) {
+      seconds = 0;
+      minutes++;
+    }
+    if (minutes >= 60) {
+      minutes = 0;
+      hours++;
+    }
+    if (hours >= 24) {
+      hours = 0;
+    }
+
+    // Display time
+    lcd.setCursor(0, 0);
+    lcd.print("Time: ");
+    if (hours < 10) lcd.print("0");
+    lcd.print(hours);
+    lcd.print(":");
+    if (minutes < 10) lcd.print("0");
+    lcd.print(minutes);
+    lcd.print(":");
+    if (seconds < 10) lcd.print("0");
+    lcd.print(seconds);
+
+    // Display dummy date
+    lcd.setCursor(0, 1);
+    lcd.print("Date: 21/06/2025 ");
+  }
+}
